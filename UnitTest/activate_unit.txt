@@ -1,0 +1,9 @@
+npm init
+npm install cypress --save-dev
+npm install faker
+npm audit fix --force
+npm cypress open  # if you want to run your test using browser
+or
+npm cy:open # if you want to run your test using browser (short cut & you have to have this command in your package.json file)
+or 
+npx cypress run # if you want to run from CLI

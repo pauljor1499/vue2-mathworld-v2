@@ -1,0 +1,89 @@
+// Declarative Pipeline using groovy
+// Need to create a jenkins cluster
+// MSBUILD LOCATION: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe'
+// 
+
+def slackResponse = slackSend(channel: "build-test-deploy", message: "******** Build-Restore-Test MathWorld Web Dev Pipeline  **********")
+stageResults = [:]
+
+pipeline 
+{
+    agent any     // where to execute the 
+	environment 
+        {
+            
+	    }
+    stages
+    {
+        stage('........ Stage: (AA) Preq: Create Test Results Dir" ........')
+        {
+            steps
+            {          
+                slackSend(color: "good", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER}")                  
+                slackSend(color: "good", message: "........ Stage: (00) Execution Done: ........")
+            }         
+        }
+
+        stage('....... Stage: (BB) Preq: Remove PREVIOUS BUILD DIR ........')
+        {
+            steps
+            {
+                deleteDir()
+            }
+        }
+
+        stage('........ Stage: (01) Clone: MathWorld Web Project ........')
+        {				
+            steps 
+            {
+                script
+                {
+                    try
+                    {
+                        slackSend(color: "good", message: "........ Stage: (01) Clone: MathWorld Web Project:  ........")
+                        echo "**** GitLab Cloning Branch: ****"                
+                        echo "**** Executing Stage # 1 ******"                        
+                        git branch: 'DEVELOPMENT-v1', credentialsId: 'Mathworld-Jenkins-SSH-Key', url: 'git@gitlab.com:mathworld1/FrontEnd.git'
+                        slackSend(color: "good", message: "****** Stage: (01) Execution Done: ******")
+                    }
+                    catch (Exception e) 
+                    {                                      
+                        slackSend(color: "danger", message: "........ Stage (01) Caught Exception  ........")
+                        slackSend(color: "danger", message: "${e.tostring()}") 
+                        slackSend(color: "danger", message: "Cannot deploy without successful build") 
+                        slackSend(color: "danger", message: "........ Stage (01) GitLab Cloning Branch:  ........") 
+                        currentBuild.result = "FAILURE"                                                             
+                    }  
+                }               
+            }
+        }
+            
+        stage('....... Stage: (02) Build: Vue Pages .......')
+        {
+            steps
+            {            
+                echo "**** Executing Stage # 02 ******"
+                slackSend(color: "good", message: "...... Stage: (02) Build: Vue Page .......")                 
+                slackSend(color: "good", message: "........ Stage: (02) Execution Done: ........")                                
+            }           
+        }               
+    }
+    
+    post 
+    {        
+        success {
+            echo 'this is the stage post success message'
+            slackSend(color: "good", message: "........ Stage: Post Build Stats  ........")                                                
+        }
+
+        failure {
+            echo 'this is the overall post failure message'
+            slackSend(color: "danger", message: "........ Stage: Post Build Stats  ........")                               
+        }
+        cleanup {
+            echo 'this is the overall post cleanup message'
+            slackSend(color: "danger", message: "........ Stage: Post Build Ceanup  ........")               
+        }     
+    }
+}
+

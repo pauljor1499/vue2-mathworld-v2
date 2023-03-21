@@ -1,0 +1,41 @@
+{
+  "name": "unittest",
+  "version": "1.0.0",
+  "description": "Unit Test for MathWorld",
+  "author": "Yshmael Ammonraheem",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "main": "cypress.config.js",
+  "dependencies": {
+    "faker": "^5.5.3",
+    "prettier": "^2.8.0",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@vue/cli-service": "~5.0.8",
+    "cypress": "^12.3.0",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^1.15.2",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/mathworld1/FrontEnd/issues"
+  },
+  "homepage": "https://gitlab.com/mathworld1/FrontEnd#readme",
+  "keywords": [
+    "Automation",
+    "MathWorld",
+    "Unit",
+    "Test"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/mathworld1/FrontEnd.git"
+  }
+}
