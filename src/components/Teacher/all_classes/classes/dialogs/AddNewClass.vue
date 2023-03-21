@@ -539,7 +539,11 @@
                     >
                         Cancel
                     </v-btn>
-                    <v-btn width="100" color="primary" @click="create_class()">
+                    <v-btn
+                        width="100"
+                        color="primary"
+                        @click="create_new_class()"
+                    >
                         Create
                     </v-btn>
                 </v-card-actions>
@@ -549,7 +553,6 @@
 </template>
 
 <script>
-import { ClassData } from "@/store/Teacher/ClassData";
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import { AllClassesService } from "@/api/Teacher/all_classes/AllClassesData";
@@ -568,8 +571,6 @@ export default {
 
     data() {
         return {
-            class_store: ClassData(),
-
             dialog: false,
             dialog2: null,
             dialog3: null,
@@ -607,11 +608,6 @@ export default {
     },
 
     methods: {
-        create_class() {
-            var results = this.class_store.create_new_class(adasd);
-            console.log(results);
-        },
-
         create_new_class() {
             this.$v.title.$touch();
             this.$v.description.$touch();
