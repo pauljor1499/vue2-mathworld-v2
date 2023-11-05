@@ -1,0 +1,5 @@
+npm install 
+// npm install -g json-server
+// npm list -g --depth 0
+// npm json-sever --watch .\src\data\index.js
+npm run serve
